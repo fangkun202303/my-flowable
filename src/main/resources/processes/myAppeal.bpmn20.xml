@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:flowable="http://flowable.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.flowable.org/processdef">
+  <process id="myAppeal" name="myAppeal" isExecutable="true">
+    <documentation>案件稽核流程</documentation>
+    <startEvent id="p001" name="开始"></startEvent>
+    <exclusiveGateway id="p002"></exclusiveGateway>
+    <userTask id="p003" name="案件调查"></userTask>
+    <sequenceFlow id="sid-631B0278-E9A2-4D71-A686-CF429FBA98CF" sourceRef="p003" targetRef="p004"></sequenceFlow>
+    <userTask id="p005" name="案件申诉"></userTask>
+    <userTask id="p006" name="案件合议"></userTask>
+    <exclusiveGateway id="p008"></exclusiveGateway>
+    <endEvent id="p009"></endEvent>
+    <userTask id="p007" name="处理案件"></userTask>
+    <sequenceFlow id="001" name="立案申请" sourceRef="p001" targetRef="p002"></sequenceFlow>
+    <sequenceFlow id="002" name="同意稽核" sourceRef="p002" targetRef="p003" skipExpression="${supnCaseStas==3}"></sequenceFlow>
+    <sequenceFlow id="003" name="不予稽核" sourceRef="p002" targetRef="p009" skipExpression="${supnCaseStas==4}"></sequenceFlow>
+    <sequenceFlow id="004" name="案件审核" sourceRef="p003" targetRef="p004"></sequenceFlow>
+    <sequenceFlow id="006" name="审核通过" sourceRef="p004" targetRef="p005" skipExpression="${supnCaseStas==7}"></sequenceFlow>
+    <sequenceFlow id="005" name="重新调查" sourceRef="p004" targetRef="p003" skipExpression="${supnCaseStas==5}"></sequenceFlow>
+    <sequenceFlow id="007" name="申请合议" sourceRef="p005" targetRef="p006"></sequenceFlow>
+    <sequenceFlow id="008" name="提交处理" sourceRef="p006" targetRef="p007"></sequenceFlow>
+    <sequenceFlow id="009" name="提交审批" sourceRef="p007" targetRef="p008"></sequenceFlow>
+    <sequenceFlow id="010" name="重新合议" sourceRef="p008" targetRef="p007" skipExpression="${supnCaseStas==9}"/>
+    <sequenceFlow id="011" name="同意结案" sourceRef="p008" targetRef="p009" skipExpression="${supnCaseStas==11}"></sequenceFlow>
+    <exclusiveGateway id="p004"></exclusiveGateway>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_myAppeal">
+    <bpmndi:BPMNPlane bpmnElement="myAppeal" id="BPMNPlane_myAppeal">
+      <bpmndi:BPMNShape bpmnElement="p001" id="BPMNShape_p001">
+        <omgdc:Bounds height="30.0" width="30.0" x="255.0" y="163.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="p002" id="BPMNShape_p002">
+        <omgdc:Bounds height="40.0" width="40.0" x="405.0" y="158.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="p003" id="BPMNShape_p003">
+        <omgdc:Bounds height="80.0" width="100.0" x="540.0" y="138.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="p005" id="BPMNShape_p005">
+        <omgdc:Bounds height="80.0" width="100.0" x="855.0" y="138.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="p006" id="BPMNShape_p006">
+        <omgdc:Bounds height="80.0" width="100.0" x="1050.0" y="138.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="p008" id="BPMNShape_p008">
+        <omgdc:Bounds height="40.0" width="40.0" x="1455.0" y="158.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="p009" id="BPMNShape_p009">
+        <omgdc:Bounds height="28.0" width="28.0" x="1635.0" y="164.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="p007" id="BPMNShape_p007">
+        <omgdc:Bounds height="80.0" width="100.0" x="1245.0" y="138.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="p004" id="BPMNShape_p004">
+        <omgdc:Bounds height="40.0" width="40.0" x="720.0" y="158.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="010" id="BPMNEdge_010">
+        <omgdi:waypoint x="1475.5" y="157.67578125"></omgdi:waypoint>
+        <omgdi:waypoint x="1475.5" y="91.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1295.0" y="91.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1295.0" y="138.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="011" id="BPMNEdge_011">
+        <omgdi:waypoint x="1494.9497578925732" y="178.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1635.0" y="178.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="001" id="BPMNEdge_001">
+        <omgdi:waypoint x="311.3500187721367" y="178.5"></omgdi:waypoint>
+        <omgdi:waypoint x="405.5" y="178.5"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="002" id="BPMNEdge_002">
+        <omgdi:waypoint x="444.50196526507995" y="178.44207317073173"></omgdi:waypoint>
+        <omgdi:waypoint x="539.9999999999981" y="178.1518237082067"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="003" id="BPMNEdge_003">
+        <omgdi:waypoint x="425.5" y="197.44039046653145"></omgdi:waypoint>
+        <omgdi:waypoint x="425.5" y="277.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1658.2000122070312" y="277.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1658.2000122070312" y="192.94997595855378"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="004" id="BPMNEdge_004">
+        <omgdi:waypoint x="639.9499999999581" y="178.0"></omgdi:waypoint>
+        <omgdi:waypoint x="720.0" y="178.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="005" id="BPMNEdge_005">
+        <omgdi:waypoint x="740.5" y="158.5"></omgdi:waypoint>
+        <omgdi:waypoint x="740.5" y="81.0"></omgdi:waypoint>
+        <omgdi:waypoint x="590.0" y="81.0"></omgdi:waypoint>
+        <omgdi:waypoint x="590.0" y="138.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="006" id="BPMNEdge_006">
+        <omgdi:waypoint x="759.5019652650799" y="178.44207317073176"></omgdi:waypoint>
+        <omgdi:waypoint x="854.9999999999886" y="178.1518237082067"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="007" id="BPMNEdge_007">
+        <omgdi:waypoint x="954.9499999999999" y="178.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1050.0" y="178.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="008" id="BPMNEdge_008">
+        <omgdi:waypoint x="1149.95" y="178.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1245.0" y="178.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="009" id="BPMNEdge_009">
+        <omgdi:waypoint x="1344.949999999943" y="178.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1455.0" y="178.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-631B0278-E9A2-4D71-A686-CF429FBA98CF" id="BPMNEdge_sid-631B0278-E9A2-4D71-A686-CF429FBA98CF">
+        <omgdi:waypoint x="639.9499999999989" y="178.16594684385382"></omgdi:waypoint>
+        <omgdi:waypoint x="720.4333333333334" y="178.43333333333334"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>
